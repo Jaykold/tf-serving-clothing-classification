@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tf-serving-model
+spec:
+  replicas: 1 # Specifies that there should be 1 replica of the pod running.
+  selector:
+    matchLabels:
+      app: tf-serving-model # The Deployment will manage pods with the label "app: tf-serving".
+  template:
+    metadata:
+      labels:
+        app: tf-serving-model # The pods created by this Deployment will have the label "app: tf-serving".
+    spec:
+      containers:
+      - name: tf-serving-model # The name of the container within the pod.
+        image: zoomcamp-10-model:xception-v1-03 # The Docker image to be used for this container.
+        resources:
+          limits:
+            memory: "512Mi" # The maximum amount of memory the container can use.
+            cpu: "1" # The maximum amount of CPU the container can use.
+        ports:
+        - containerPort: 8500 # The port that the container will expose.
